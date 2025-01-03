@@ -11,8 +11,17 @@ Log.Logger =  new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("log/v
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+{
+    var postgresUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
+    var postgresPassword = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+    var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
+    // Substitua os placeholders pelos valores das variáveis de ambiente
+    connectionString = connectionString.Replace("POSTGRES_USER", postgresUser)
+                                        .Replace("POSTGRES_PASSWORD", postgresPassword);
+
+    options.UseNpgsql(connectionString);
+});
 
 // builder.Host.UseSerilog();
 // Add services to the container
