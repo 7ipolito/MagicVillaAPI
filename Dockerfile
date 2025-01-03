@@ -9,7 +9,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MagicVilla_VillaAPI/MagicVilla_VillaAPI.csproj", "[PastaDoProjeto]/"]
+COPY ["MagicVilla_VillaAPI/MagicVilla_VillaAPI.csproj", "MagicVilla_VillaAPI/"]
 RUN dotnet restore "./MagicVilla_VillaAPI/MagicVilla_VillaAPI.csproj"
 COPY . .
 WORKDIR "/src/MagicVilla_VillaAPI"
